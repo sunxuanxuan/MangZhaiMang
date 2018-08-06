@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#272521"
+        android:paddingLeft="18dp"
+        android:paddingBottom="15dp">
+
+        <ImageView
+            android:id="@+id/cn_pre"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/pre"
+            android:layout_alignBottom="@id/cn_title"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="修改昵称"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/tab_checked"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/cn_title"/>
+
+    </RelativeLayout>
+    
+    <EditText
+        android:layout_marginTop="80dp"
+        android:layout_width="900dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:hint="请输入昵称"
+        android:layout_gravity="center"
+        android:id="@+id/cn_edit"/>
+    
+    <Button
+        android:textSize="20sp"
+        android:layout_marginTop="80dp"
+        android:layout_width="900dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="保存"
+        android:id="@+id/cn_save_btn"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

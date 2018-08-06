@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tipwindow"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="小鹰帮你锁定了这个位置"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#000"
+        android:id="@+id/seat_pos"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="是否预定呢?"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="确认预定"
+        android:id="@+id/tip_item1"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/item"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="再选一次"
+        android:id="@+id/tip_item2"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/item"
+        android:paddingRight="40dp"
+        android:paddingLeft="40dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="#000"/>
+
+</LinearLayout>

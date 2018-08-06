@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="home_spinner_titles">
+        <item>华南理工大学图书馆二层</item>
+        <item>华南理工大学图书馆三层</item>
+        <item>华南理工大学图书馆过刊阅览室</item>
+        <item>华南理工大学电子阅览室</item>
+    </string-array>
+</resources>

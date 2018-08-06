@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="拍照"
+        android:id="@+id/pop_take_photo"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:background="#fff"
+        android:textSize="20sp"
+        android:textColor="@color/sky_blue" />
+
+    <TextView
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:id="@+id/pop_choose_phone"
+        android:text="从本地选择"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:textColor="@color/sky_blue" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/sky_blue"
+        android:background="#fff"
+        android:textSize="20sp"
+        android:id="@+id/pop_cancel"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:text="取消" />
+
+</LinearLayout>
