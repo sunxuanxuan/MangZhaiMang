@@ -1,6 +1,7 @@
 package com.example.mangzhaimang.bookit;
 
 import android.app.Activity;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,17 +9,23 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.media.session.IMediaControllerCallback;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,27 +35,50 @@ import com.example.mangzhaimang.assistance.ScreenUtils;
 import com.example.mangzhaimang.assistance.Seat;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
-    private RefreshLayout refreshLayout;
     private PopWindowForMenu popWindowForMenu;
-    private HomeTipPopupWindow homeTipPopupWindow;
-    private YJXZPopupWindow yjxzPopupWindow;
-    private OrderOutOfTime outofTime;
     private Spinner spinner;
     private ImageView more;
     private RelativeLayout relativeLayout;
-    private int choice;
     List<Seat> seats = new ArrayList<>();
     private int recLen = 900;
-    private TextView mTimer;
+    private int recLen2 = 0;
+    private int timerState = 1;
     public MyThread myThread;
     private View mView;
+    private TextView timerLabel;
+    private TextView timerLabel2;
 
-    private TextView yjxz;
+    private int choice = -1;
+
+    private SlidingUpPanelLayout slidingup1;
+    private LinearLayout sliupguide;
+    private RelativeLayout prefer;
+    private LinearLayout panel1;
+    private LinearLayout panel2;
+    private LinearLayout panel3;
+    private LinearLayout panel4;
+
+    private LinearLayout panel3_cancel,panel3_confirm;
+
+    private LinearLayout sto_pos;
+    private LinearLayout pre_pos;
+    private LinearLayout old_pos;
+
+    private TextView locked_pos;
+
+    private int method_choice = 0;
+
+    private ImageView choice_next;
+
+    private LinearLayout panel2_next;
+    private LinearLayout panel2_return;
+    private LinearLayout panel4_quit;
 
     public static HomeFragment newInstance(){
         Bundle args = new Bundle();
@@ -62,36 +92,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.home_layout, container, false);
         this.mView = view;
-        refreshLayout = view.findViewById(R.id.home_refresh_layout);
         more = (ImageView)view.findViewById(R.id.home_more);
         spinner = (Spinner) view.findViewById(R.id.home_title_spinner);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relative);
-        yjxz = (TextView)view.findViewById(R.id.yjxz);
-
-        addSeats();
-
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                delay();
-                refreshlayout.finishRefresh();
-            }
-        });
-        refreshLayout.setEnableRefresh(true);
-        refreshLayout.finishRefresh();
-
-        yjxz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                yjxzPopupWindow = new YJXZPopupWindow(getActivity(),HomeFragment.this);
-                yjxzPopupWindow.showPopupWindow(getView());
-            }
-        });
+        slidingup1 = (SlidingUpPanelLayout)view.findViewById(R.id.mine_slidingup1);
+        sliupguide = (LinearLayout)view.findViewById(R.id.mine_slidingup_guide);
+        prefer = (RelativeLayout)view.findViewById(R.id.mine_slidingup_prefer);
+        sto_pos = (LinearLayout)view.findViewById(R.id.mine_sto_pos);
+        pre_pos = (LinearLayout)view.findViewById(R.id.mine_pref_pos);
+        old_pos = (LinearLayout)view.findViewById(R.id.mine_old_pos);
+        choice_next = (ImageView) view.findViewById(R.id.mine_choice_next);
+        panel1 = (LinearLayout)view.findViewById(R.id.home_panel1);
+        panel2 = (LinearLayout)view.findViewById(R.id.home_panel2);
+        panel3 = (LinearLayout) view.findViewById(R.id.home_panel3);
+        panel4 = (LinearLayout)view.findViewById(R.id.home_panel4);
+        panel2_return = (LinearLayout) view.findViewById(R.id.panel2_return);
+        panel2_next = (LinearLayout)view.findViewById(R.id.panel2_next);
+        locked_pos = (TextView) view.findViewById(R.id.home_locked_pos);
+        timerLabel = (TextView)view.findViewById(R.id.mine_panel3_timer);
+        timerLabel2 = (TextView)view.findViewById(R.id.mine_panel4_timer);
+        panel3_cancel = (LinearLayout)view.findViewById(R.id.panel3_cancel) ;
+        panel3_confirm = (LinearLayout)view.findViewById(R.id.panel3_confirm);
+        panel4_quit = (LinearLayout)view.findViewById(R.id.home_panel4_quit);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.title_spinner,getResources().getStringArray(R.array.home_spinner_titles));
         spinner.setAdapter(adapter);
         ViewGroup.LayoutParams lp = spinner.getLayoutParams();
         lp.width = (int)(ScreenUtils.getScreenWidth(getActivity())*0.7);
+
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/systematic.ttf");
+        timerLabel.setTypeface(typeface);
+        timerLabel2.setTypeface(typeface);
 
         return view;
     }
@@ -106,92 +137,195 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 popWindowForMenu.showPopupWindow(getActivity().findViewById(R.id.home_more));
             }
         });
+
+        slidingup1.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if(previousState == SlidingUpPanelLayout.PanelState.COLLAPSED){
+                    sliupguide.setVisibility(View.GONE);
+                    prefer.setVisibility(View.VISIBLE);
+                    clickable(false);
+                }else if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED){
+                    sliupguide.setVisibility(View.VISIBLE);
+                    prefer.setVisibility(View.INVISIBLE);
+                    clickable(true);
+                }
+            }
+        });
+
+        sto_pos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initPosIcon();
+                ImageView iv = (ImageView) sto_pos.getChildAt(0);
+                iv.setImageResource(R.drawable.seat_y);
+                method_choice = 1;
+            }
+        });
+
+        pre_pos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initPosIcon();
+                ImageView iv = (ImageView)pre_pos.getChildAt(0);
+                iv.setImageResource(R.drawable.seat_y);
+                method_choice = 2;
+            }
+        });
+
+        old_pos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initPosIcon();
+                ImageView iv = (ImageView)old_pos.getChildAt(0);
+                iv.setImageResource(R.drawable.seat_y);
+                method_choice = 3;
+            }
+        });
+
+        choice_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (method_choice){
+                    case 1:
+                        stochastic();
+                        break;
+                        default:;break;
+                }
+            }
+        });
+
+        panel2_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                panel1.setVisibility(View.VISIBLE);
+                panel2.setVisibility(View.GONE);
+                choice = -1;
+            }
+        });
+
+        panel2_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                panel2.setVisibility(View.GONE);
+                panel3.setVisibility(View.VISIBLE);
+                ImageView iv = (ImageView)relativeLayout.findViewById(choice);
+                iv.setImageResource(R.drawable.my_seat);
+                startThread();
+            }
+        });
+
+        panel3_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                panel3.setVisibility(View.GONE);
+                panel1.setVisibility(View.VISIBLE);
+                slidingup1.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                ImageView iv = (ImageView)relativeLayout.findViewById(choice);
+                iv.setImageResource(R.drawable.em_seat);
+                choice = -1;
+            }
+        });
+
+        panel3_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                panel3.setVisibility(View.GONE);
+                panel4.setVisibility(View.VISIBLE);
+                timerState = 2;
+                timerLabel2.setText("00 : 00");
+                recLen2 = 0;
+            }
+        });
+
+        panel4_quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                panel4.setVisibility(View.GONE);
+                panel1.setVisibility(View.VISIBLE);
+                slidingup1.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                ImageView iv = (ImageView)relativeLayout.findViewById(choice);
+                iv.setImageResource(R.drawable.em_seat);
+                choice = -1;
+                timerState = 1;
+            }
+        });
+        panelListener();
+        addSeats();
     }
 
-    private void delay(){
-        double time = 500;
-        while (time>0){time--;};
+    private void initPosIcon(){
+        ImageView iv1 = (ImageView)sto_pos.getChildAt(0);
+        ImageView iv2 = (ImageView)pre_pos.getChildAt(0);
+        ImageView iv3 = (ImageView)old_pos.getChildAt(0);
+        iv1.setImageResource(R.drawable.seat_b);
+        iv2.setImageResource(R.drawable.seat_b);
+        iv3.setImageResource(R.drawable.seat_b);
     }
 
-    private void setBackgroundAlpha(float sAlpha,Context mContext){
-        WindowManager.LayoutParams lp =((Activity)mContext).getWindow().getAttributes();
-        lp.alpha = sAlpha;
-        ((Activity) mContext).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        ((Activity) mContext).getWindow().setAttributes(lp);
-    }
-
-    public Bitmap addCode(int resourceId,int code){
-        String str = String.format("%02d",code);
-        Bitmap old_map = BitmapFactory.decodeResource(getResources(),resourceId);
-        Bitmap new_map = Bitmap.createBitmap(old_map.getWidth(),old_map.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(new_map);
-        Paint paint = new Paint();
-        canvas.drawBitmap(old_map,0,0,null);
-        paint.setColor(Color.BLACK);
-        if(code>=14&&code<=19||code>=34&&code<=42||code>=47&&code<=55){
-            paint.setTextSize(170);
-            Rect rect = new Rect();
-            paint.getTextBounds(str,0,str.length(),rect);
-            canvas.drawText(str,old_map.getWidth()/2-rect.width()/2,old_map.getHeight()/2,paint);
-        }else {
-            paint.setTextSize(70);
-            Rect rect = new Rect();
-            paint.getTextBounds(str,0,str.length(),rect);
-            canvas.drawText(str,old_map.getWidth()/2-rect.width()/2,old_map.getHeight()/2+rect.height()/2,paint);
+    private void clickable(boolean state){
+        int ccount = relativeLayout.getChildCount();
+        for(int i=0;i<ccount;i++){
+            ImageView iv =(ImageView)relativeLayout.getChildAt(i);
+            iv.setClickable(state);
         }
-        return new_map;
     }
 
     public void addSeats(){
         int count = 0;
-        int width = (int)(ScreenUtils.getScreenWidth(getActivity())/12);
+        int width = (int)(ScreenUtils.getScreenWidth(getActivity())/14);
 
         //左上
-        for(int i=0;i<5;i++){
+        for(int i=0;i<4;i++){
             for(int j=0;j<3;j++){
-                if(i == 4){
-                    if(j==2){
-                        continue;
-                    }
+                if(i==1&&j==0){
                     ImageView imageView = new ImageView(getActivity());
                     RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
-                    lp.setMargins(40+width/2+j*(width+10),40+i*(width+10),0,0);
+                    lp.setMargins(40+(width+20)*j,40+(width+20)*i,0,0);
                     imageView.setLayoutParams(lp);
-                    imageView.setId(count++);
-                    imageView.setImageBitmap(addCode(R.drawable.em_seat,count-1));
-                    imageView.setOnClickListener(this);
+                    imageView.setImageResource(R.drawable.power);
                     relativeLayout.addView(imageView);
-
-                    Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.BASE);
-                    seats.add(seat);
-
                     continue;
                 }
                 ImageView imageView = new ImageView(getActivity());
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
-                lp.setMargins(40+j*(width+10),40+i*(width+10),0,0);
-                if(j==0){
-                    lp.leftMargin = 40;
-                }
-                if(i==0){
-                    lp.topMargin = 40;
-                }
+                lp.setMargins(40+(width+20)*j,40+(width+20)*i,0,0);
                 imageView.setLayoutParams(lp);
                 imageView.setId(count++);
-                imageView.setImageBitmap(addCode(R.drawable.em_seat,count-1));
-
-                Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.BASE);
-                seats.add(seat);
-
+                imageView.setImageResource(R.drawable.em_seat);
                 imageView.setOnClickListener(this);
                 relativeLayout.addView(imageView);
+
+                Seat seat = new Seat(count - 1,Seat.Status.EMPTY,Seat.Cate.BASE);
+                seats.add(seat);
             }
         }
+
+        int start0 = (int)(0.5*width+50);
+        for(int i=0;i<2;i++){
+            ImageView imageView = new ImageView(getActivity());
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
+            lp.setMargins(start0+(width+20)*i,40+(width+20)*4 ,0,0);
+            imageView.setLayoutParams(lp);
+            imageView.setId(count++);
+            imageView.setImageResource(R.drawable.em_seat);
+            imageView.setOnClickListener(this);
+            relativeLayout.addView(imageView);
+
+            Seat seat = new Seat(count - 1,Seat.Status.EMPTY,Seat.Cate.BASE);
+            seats.add(seat);
+        }
+
         float half = ScreenUtils.getScreenWidth(getActivity())/2;
 
         ImageView im = new ImageView(getActivity());
-        RelativeLayout.LayoutParams llp = new RelativeLayout.LayoutParams(width+10,width+10);
-        llp.setMargins((int)half-(width+10)/2,20,0,0);
+        RelativeLayout.LayoutParams llp = new RelativeLayout.LayoutParams(width,width+10);
+        llp.setMargins((int)half-(width+20)/2,20,0,0);
         im.setLayoutParams(llp);
         im.setImageResource(R.drawable.door);
         relativeLayout.addView(im);
@@ -199,17 +333,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         //中上
         for(int i=0;i<3;i++){
             for(int j=0;j<2;j++){
+                if(i==2 && j==0){
+                    ImageView imageView = new ImageView(getActivity());
+                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
+                    lp.setMargins(0,i*(width+20)+width*2,0,0);
+                    lp.leftMargin = (int)half - width - 10;
+                    imageView.setLayoutParams(lp);
+                    imageView.setImageResource(R.drawable.power);
+                    relativeLayout.addView(imageView);
+                    continue;
+                }
                 ImageView imageView = new ImageView(getActivity());
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width+30,width+30);
-                lp.setMargins(0,i*(width+30)+width*2,0,0);
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
+                lp.setMargins(0,i*(width+20)+width*2,0,0);
                 if(j==0){
-                    lp.leftMargin = (int)half - width - 50;
+                    lp.leftMargin = (int)half - width - 10;
                 }else{
-                    lp.leftMargin = (int)half + 20;
+                    lp.leftMargin = (int)half + 10;
                 }
                 imageView.setLayoutParams(lp);
                 imageView.setId(count++);
-                imageView.setImageBitmap(addCode(R.drawable.com_seat,count-1));
+                imageView.setImageResource(R.drawable.em_seat);
 
                 Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.COM);
                 seats.add(seat);
@@ -220,41 +364,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }
 
         //右上
-        int start = (int)(2 * half - (40+3*(width+10)));
+        int start = (int)(2*half-80-3*width);
         for(int i=0;i<5;i++){
             for(int j=0;j<3;j++){
-                if(i == 4){
-                    if(j==2){
-                        continue;
-                    }
+                if(i==4&&j==2){
                     ImageView imageView = new ImageView(getActivity());
-                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
-                    lp.setMargins(width/2+start+j*(width+10),40+i*(width+10),0,0);
-                    imageView.setLayoutParams(lp);
-                    imageView.setId(count++);
-                    imageView.setImageBitmap(addCode(R.drawable.em_seat,count-1));
+                    RelativeLayout.LayoutParams pl = new RelativeLayout.LayoutParams(width,width);
+                    pl.setMargins(start+(width+20)*j,40+(width+20)*i,0,0);
+                    imageView.setLayoutParams(pl);
+                    imageView.setImageResource(R.drawable.power);
 
-                    Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.BASE);
-                    seats.add(seat);
-
-                    imageView.setOnClickListener(this);
                     relativeLayout.addView(imageView);
                     continue;
                 }
                 ImageView imageView = new ImageView(getActivity());
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
-                lp.setMargins(start+j*(width+10),40+i*(width+10),0,0);
-                if(j==0){
-                    lp.leftMargin = start;
-                }
-                if(i==0){
-                    lp.topMargin = 40;
-                }
-                imageView.setLayoutParams(lp);
+                RelativeLayout.LayoutParams pl = new RelativeLayout.LayoutParams(width,width);
+                pl.setMargins(start+(width+20)*j,40+(width+20)*i,0,0);
+                imageView.setLayoutParams(pl);
                 imageView.setId(count++);
-                imageView.setImageBitmap(addCode(R.drawable.em_seat,count-1));
-
-                Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.BASE);
+                imageView.setImageResource(R.drawable.em_seat);
+                Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.COM);
                 seats.add(seat);
 
                 imageView.setOnClickListener(this);
@@ -263,74 +392,49 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }
         //左下
         int startL = 40+5*(width+10)+width*2;
-        width+=10;
+
+        ImageView iv1 = new ImageView(getActivity());
+        RelativeLayout.LayoutParams pl1 = new RelativeLayout.LayoutParams(width*3,width*3);
+        pl1.setMargins(40,startL,0,0);
+        iv1.setLayoutParams(pl1);
+        iv1.setImageResource(R.drawable.bookshelf);
+        relativeLayout.addView(iv1);
+
+        //中下
+        int start2 = (int)(half-20-1.5*width);
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
+                if(i==2&&j==2){
+                    ImageView imageView = new ImageView(getActivity());
+                    RelativeLayout.LayoutParams pl = new RelativeLayout.LayoutParams(width,width);
+                    pl.setMargins(start2+(width+20)*j,startL+(width+20)*i,0,0);
+                    imageView.setLayoutParams(pl);
+                    imageView.setImageResource(R.drawable.power);
+                    relativeLayout.addView(imageView);
+                    continue;
+                }
                 ImageView imageView = new ImageView(getActivity());
-                RelativeLayout.LayoutParams pl = new RelativeLayout.LayoutParams(width,width);
-                pl.setMargins(40+j*(width+10),startL+i*(width+10),0,0);
-                if(i==0){
-                    pl.topMargin=startL;
-                }
-                if(j==0){
-                    pl.leftMargin = 40;
-                }
-                imageView.setLayoutParams(pl);
-                imageView.setId(count++);
-                imageView.setImageBitmap(addCode(R.drawable.power_seat,count-1));
-
-                Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.POWER);
-                seats.add(seat);
-
-                imageView.setOnClickListener(this);
-                relativeLayout.addView(imageView);
-            }
-        }
-        //中下
-        for(int i=0;i<2;i++){
-            for(int j=0;j<2;j++){
-                ImageView imageView = new ImageView(getActivity());
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width-10,width-10);
-                lp.setMargins(0,startL+i*(width)+width/2,0,0);
-                if(j==0){
-                    lp.leftMargin = (int)half - width - 10;
-                }else{
-                    lp.leftMargin = (int)half + 20;
-                }
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
+                lp.setMargins(start2+(width+20)*j,startL+(width+20)*i,0,0);
                 imageView.setLayoutParams(lp);
                 imageView.setId(count++);
-                imageView.setImageBitmap(addCode(R.drawable.em_seat,count-1));
+                imageView.setImageResource(R.drawable.em_seat);
+                relativeLayout.addView(imageView);
 
                 Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.BASE);
                 seats.add(seat);
 
                 imageView.setOnClickListener(this);
-                relativeLayout.addView(imageView);
             }
         }
+
         //右下
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                ImageView imageView = new ImageView(getActivity());
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width,width);
-                lp.setMargins(start+j*(width+10),startL+i*(width+10),0,0);
-                if(j==0){
-                    lp.leftMargin = start;
-                }
-                if(i==0){
-                    lp.topMargin = startL;
-                }
-                imageView.setLayoutParams(lp);
-                imageView.setId(count++);
-                imageView.setImageBitmap(addCode(R.drawable.power_seat,count-1));
-
-                Seat seat = new Seat(count-1, Seat.Status.EMPTY, Seat.Cate.POWER);
-                seats.add(seat);
-
-                imageView.setOnClickListener(this);
-                relativeLayout.addView(imageView);
-            }
-        }
+        ImageView iv2 = new ImageView(getActivity());
+        RelativeLayout.LayoutParams pl2 = new RelativeLayout.LayoutParams(width*3,width*3);
+        pl2.setMargins((int)(half)*2-40-width*3,startL,0,0);
+        iv2.setLayoutParams(pl2);
+        iv2.setImageResource(R.drawable.bookshelf);
+        relativeLayout.addView(iv2);
     }
 
     @Override
@@ -342,34 +446,44 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 Toast.makeText(getActivity(),"您已经预定了一个座位！",Toast.LENGTH_SHORT).show();
                 return;
             }
-            homeTipPopupWindow = new HomeTipPopupWindow(getActivity(),HomeFragment.this);
-            homeTipPopupWindow.showPopupWindow(getView(),id);
-        }else if(seat.getStatus()==Seat.Status.MINE){
-            outofTime = new OrderOutOfTime(getActivity(),HomeFragment.this);
-            outofTime.showPopupWindow(getView(),id);
+            panel1.setVisibility(View.GONE);
+            panel2.setVisibility(View.VISIBLE);
+            String str = "小鹰已经帮你锁定了"+String.valueOf(id+1)+"号座位";
+            locked_pos.setText(str);
+            if(slidingup1.getPanelState()==SlidingUpPanelLayout.PanelState.COLLAPSED){
+                slidingup1.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+            choice = id;
         }else{
             Toast.makeText(getActivity(),"该座位已经有人了~",Toast.LENGTH_SHORT).show();
         }
     }
     private boolean hasAseat(){
-        for(int i=0;i<seats.size();i++){
-            Seat seat = seats.get(i);
-            if(seat.getStatus()==Seat.Status.MINE){
-                return true;
-            }
+        if(choice == -1){
+            return false;
         }
-        return false;
+        else return true;
     }
 
     final  android.os.Handler handler = new android.os.Handler(){
         public void handleMessage(Message msg){
             switch (msg.what){
                 case 1:
-                    recLen--;
-                    if(mTimer!=null){
-                        int m = recLen/60;
-                        int s = recLen%60;
-                        mTimer.setText(String.format("%02d",m)+":"+String.format("%02d",s));
+                    if(timerState == 1){
+                        recLen--;
+                        if(recLen<=180){
+                            timerLabel.setTextColor(Color.RED);
+                        }
+                        if(timerLabel!=null){
+                            int m = recLen/60;
+                            int s = recLen%60;
+                            timerLabel.setText(String.format("%02d",m)+" : "+String.format("%02d",s));
+                        }
+                    }else if(timerState == 2){
+                        recLen2++;
+                        int m = recLen2/60;
+                        int s = recLen2%60;
+                        timerLabel2.setText(String.format("%02d",m)+" : "+String.format("%02d",s));
                     }
             }
             super.handleMessage(msg);
@@ -396,18 +510,43 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             myThread = new MyThread();
             new Thread(myThread).start();
         }else {
+            timerLabel.setText("15 : 00");
             recLen = 900;
         }
-    }
-    public void setmTimer(TextView t){
-        this.mTimer = t;
     }
     public void stochastic(){
         int code = (int)(Math.random()*seats.size());
         while (seats.get(code).getStatus()!=Seat.Status.EMPTY){
-            code = (int)(1 + Math.random()*seats.size());
+            code = (int)(Math.random()*seats.size());
         }
         ImageView im = this.mView.findViewById(code);
         im.callOnClick();
+    }
+
+    private void panelListener(){
+        panel1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        panel2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        panel3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        panel4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }

@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    android:id="@+id/Login">
+
+<LinearLayout
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:src="@drawable/bookit"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:id="@+id/login_singup">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:text="Login"
+            android:id="@+id/login_text_login"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#999"
+            android:text="SignUp"
+            android:layout_marginLeft="80dp"
+            android:id="@+id/login_text_signup"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="#fff"
+        android:id="@+id/login_text_forget"
+        android:visibility="gone"
+        android:text="Forget  Password"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/login_container">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/input">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp">
+
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="@dimen/input_frame_height"
+                    android:background="@drawable/edittext_bg"
+                    android:paddingLeft="45dp"
+                    android:paddingRight="30dp"
+                    android:hint="请输入账号"
+                    android:id="@+id/login_account"
+                    android:maxLines="1"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_person"
+                    android:layout_alignTop="@+id/login_account"
+                    android:layout_alignBottom="@+id/login_account"
+                    android:layout_alignLeft="@+id/login_account"
+                    android:layout_marginLeft="15dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="@dimen/input_frame_height"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/edittext_bg"
+                    android:paddingRight="30dp"
+                    android:paddingLeft="45dp"
+                    android:hint="请输入密码"
+                    android:id="@+id/login_password"
+                    android:maxLines="1"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_lock"
+                    android:layout_alignTop="@+id/login_password"
+                    android:layout_alignBottom="@+id/login_password"
+                    android:layout_alignLeft="@+id/login_password"
+                    android:layout_marginLeft="15dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="80dp"
+                android:id="@+id/login_confirm">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="记住密码"
+                    android:textColor="#999"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/login_rpassowrd"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/rpassword"
+                    android:layout_toLeftOf="@+id/login_rpassowrd"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/login_confirm_bg"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/pic_checked"
+                    android:id="@+id/login_check"
+                    android:layout_alignLeft="@+id/login_confirm_bg"
+                    android:layout_alignTop="@id/login_confirm_bg"
+                    android:layout_alignBottom="@id/login_confirm_bg"
+                    android:layout_alignRight="@id/login_confirm_bg"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:textStyle="italic"
+            android:text="Forget password?"
+            android:id="@+id/login_forget_password" />
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="120dp"
+            android:src="@drawable/bt_login"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/login_bt_login"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_container"
+        android:orientation="vertical"
+        android:layout_marginTop="-10dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="410dp"
+            android:background="@drawable/input"
+            android:orientation="vertical">
+            
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="140dp"
+                android:orientation="vertical"
+                android:background="@drawable/camera_confirm_bg"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:id="@+id/signup_upload_pic">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_camera" />
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#999"
+                    android:textSize="15sp"
+                    android:text="点击上传学生证进行验证"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="13dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="300dp"
+                        android:layout_height="@dimen/input_frame_height"
+                        android:background="@drawable/edittext_bg"
+                        android:paddingLeft="45dp"
+                        android:paddingRight="30dp"
+                        android:hint="请输入账号"
+                        android:id="@+id/signup_account"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_person"
+                        android:layout_alignTop="@+id/signup_account"
+                        android:layout_alignBottom="@+id/signup_account"
+                        android:layout_alignLeft="@+id/signup_account"
+                        android:layout_marginLeft="15dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="300dp"
+                        android:layout_height="@dimen/input_frame_height"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_bg"
+                        android:paddingRight="30dp"
+                        android:paddingLeft="45dp"
+                        android:hint="请输入密码"
+                        android:id="@+id/sign_password"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_lock"
+                        android:layout_alignTop="@+id/sign_password"
+                        android:layout_alignBottom="@+id/sign_password"
+                        android:layout_alignLeft="@+id/sign_password"
+                        android:layout_marginLeft="15dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="300dp"
+                        android:layout_height="@dimen/input_frame_height"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_bg"
+                        android:paddingRight="30dp"
+                        android:paddingLeft="45dp"
+                        android:hint="请确认密码"
+                        android:id="@+id/sign_confirm"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_confirm"
+                        android:layout_alignTop="@+id/sign_confirm"
+                        android:layout_alignBottom="@+id/sign_confirm"
+                        android:layout_alignLeft="@+id/sign_confirm"
+                        android:layout_marginLeft="15dp"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/bt_signup"
+            android:layout_marginTop="-30dp"
+            android:id="@+id/signup_bt"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgetpass_container"
+        android:orientation="vertical"
+        android:layout_marginTop="-10dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:background="@drawable/input"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="140dp"
+                android:orientation="vertical"
+                android:background="@drawable/camera_confirm_bg"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:id="@+id/forget_upload_pic">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_camera" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#999"
+                    android:textSize="15sp"
+                    android:text="点击上传学生证进行验证"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="13dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="300dp"
+                        android:layout_height="@dimen/input_frame_height"
+                        android:background="@drawable/edittext_bg"
+                        android:paddingLeft="45dp"
+                        android:paddingRight="30dp"
+                        android:hint="输入密码"
+                        android:id="@+id/forget_password"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_lock"
+                        android:layout_alignTop="@+id/forget_password"
+                        android:layout_alignBottom="@+id/forget_password"
+                        android:layout_alignLeft="@+id/forget_password"
+                        android:layout_marginLeft="15dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="300dp"
+                        android:layout_height="@dimen/input_frame_height"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_bg"
+                        android:paddingRight="30dp"
+                        android:paddingLeft="45dp"
+                        android:hint="确认密码"
+                        android:id="@+id/forget_confirm"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_confirm"
+                        android:layout_alignTop="@+id/forget_confirm"
+                        android:layout_alignBottom="@+id/forget_confirm"
+                        android:layout_alignLeft="@+id/forget_confirm"
+                        android:layout_marginLeft="15dp"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/bt_confirm"
+            android:layout_marginTop="-20dp"
+            android:id="@+id/forget_bt"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+</ScrollView>
+

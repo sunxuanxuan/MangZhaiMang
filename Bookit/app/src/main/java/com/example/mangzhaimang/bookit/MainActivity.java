@@ -64,26 +64,43 @@ public class MainActivity extends AppCompatActivity {
         list.add(CommunityFragment.newInstance());
         list.add(MineFragment.newInstance());
         viewPagerAdapter.setList(list);
+
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+        bottomNavigationView.setItemIconTintList(null);
+
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             menuItem = item;
+            resetToDefaultIcon();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     viewPager.setCurrentItem(0);
+                    item.setIcon(R.drawable.home_checked);
                     return true;
                 case R.id.navigation_community:
                     viewPager.setCurrentItem(1);
+                    item.setIcon(R.drawable.community_checked);
                     return true;
                 case R.id.navigation_mine:
                     viewPager.setCurrentItem(2);
+                    item.setIcon(R.drawable.mine_checked);
                     return true;
             }
             return false;
         }
     };
+
+    private void resetToDefaultIcon(){
+        MenuItem home = bottomNavigationView.getMenu().findItem(R.id.navigation_home);
+        MenuItem community = bottomNavigationView.getMenu().findItem(R.id.navigation_community);
+        MenuItem mine = bottomNavigationView.getMenu().findItem(R.id.navigation_mine);
+        home.setIcon(R.drawable.home);
+        community.setIcon(R.drawable.community);
+        mine.setIcon(R.drawable.mine);
+    }
 
     private void init(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

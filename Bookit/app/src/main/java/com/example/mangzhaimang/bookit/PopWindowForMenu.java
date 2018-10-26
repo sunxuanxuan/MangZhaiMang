@@ -32,6 +32,11 @@ public class PopWindowForMenu extends PopupWindow implements View.OnClickListene
                 this.parentF.startActivity(intent);
                 dismiss();
                 break;
+            case R.id.home_jdjb:
+                Intent intent1 = new Intent(mContext,JDJBActivity.class);
+                this.parentF.startActivity(intent1);
+                dismiss();
+                break;
                 default:;break;
         }
     }

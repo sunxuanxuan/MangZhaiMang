@@ -19,11 +19,11 @@
             android:text="规则说明"
             android:textColor="#dbdbdb"
             android:layout_gravity="center_vertical"
-            android:textSize="20dp"/>
+            android:textSize="@dimen/title_font_size"/>
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/arrow_size"
+            android:layout_height="@dimen/arrow_size"
             android:src="@drawable/sss"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"/>
@@ -45,11 +45,11 @@
             android:text="监督占座"
             android:textColor="#dbdbdb"
             android:layout_gravity="center_vertical"
-            android:textSize="20dp"/>
+            android:textSize="@dimen/title_font_size"/>
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/arrow_size"
+            android:layout_height="@dimen/arrow_size"
             android:src="@drawable/eye"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"/>

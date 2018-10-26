@@ -8,17 +8,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#272521"
+        android:background="#fff"
         android:paddingLeft="18dp"
         android:paddingBottom="15dp">
 
         <ImageView
             android:id="@+id/bm_pre"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/arrow_size"
+            android:layout_height="@dimen/arrow_size"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/pre"
+            android:src="@drawable/pre_cn"
             android:layout_alignBottom="@id/bm_title"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"/>
@@ -27,9 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="绑定信息"
-            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_font_size"
             android:textAlignment="center"
-            android:textColor="@color/tab_checked"
+            android:textColor="#000"
             android:layout_alignParentBottom="true"
             android:id="@+id/bm_title"/>
 
@@ -47,13 +48,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/item_font_size1"
             android:text="学校"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_font_size2"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="忙摘芒大学"
@@ -73,13 +74,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/item_font_size1"
             android:text="姓名"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_font_size2"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="李浩浩"
@@ -99,13 +100,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/item_font_size1"
             android:text="学号"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_font_size2"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="201630498522"
@@ -125,13 +126,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/item_font_size1"
             android:text="专业"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_font_size2"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="交互设计"
@@ -151,13 +152,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/item_font_size1"
             android:text="手机"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_font_size2"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="15264225410"

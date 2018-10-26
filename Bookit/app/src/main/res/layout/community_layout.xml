@@ -13,7 +13,7 @@
 
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp">
+                android:layout_height="180dp">
 
                 <android.support.v4.view.ViewPager
                     android:layout_width="match_parent"
@@ -26,27 +26,45 @@
                     android:orientation="horizontal"
                     android:id="@+id/community_indictor"
                     android:layout_gravity="center|bottom" />
-                
-            </FrameLayout>
 
-        <android.support.design.widget.TabLayout
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/newmessage"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"/>
+                
+        </FrameLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="8dp"
-            android:background="#fff"
-            android:id="@+id/news_tab"
-            app:tabIndicatorColor="@color/tab_checked"
-            app:tabTextColor="#999"
-            app:tabSelectedTextColor="#000"
-            app:tabTextAppearance="@style/tablayoutText"
-            app:tabIndicatorHeight="3dp" />
+            android:background="#000"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/news_tab"
+                android:background="#000"
+                app:tabTextColor="#ddd"
+                app:tabSelectedTextColor="#fff"
+                app:tabTextAppearance="@style/tablayoutText"
+                app:tabIndicatorHeight="0dp"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/community_refresh_layout"
             app:srlEnablePreviewInEditMode="true"
-            app:srlPrimaryColor="#ebebeb">
+            app:srlPrimaryColor="#ebebeb"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
@@ -61,14 +79,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/news_viewPager"
-                        android:layout_marginTop="3dp"/>
+                        android:layout_marginTop="5dp"/>
 
                     <android.support.design.widget.FloatingActionButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/float_btn"
                         android:layout_gravity="bottom|end"
-                        app:backgroundTint="@color/tab_checked"
+                        app:backgroundTint="@color/orange"
                         android:src="@drawable/pupbutton"
                         android:layout_marginBottom="50dp"
                         android:layout_marginRight="20dp"

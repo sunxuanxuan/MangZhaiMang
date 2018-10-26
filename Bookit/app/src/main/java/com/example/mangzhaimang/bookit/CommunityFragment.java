@@ -97,6 +97,9 @@ public class CommunityFragment extends Fragment implements ViewPager.OnPageChang
                         if(menuItem.getItemId()==R.id.pop_item2){
                             Intent intent = new Intent(getActivity(),WritePaperStripsActivity.class);
                             startActivity(intent);
+                        }else if(menuItem.getItemId()==R.id.pop_item1){
+                            Intent intent = new Intent(getActivity(),XZTActivity.class);
+                            startActivity(intent);
                         }
                         return true;
                     }

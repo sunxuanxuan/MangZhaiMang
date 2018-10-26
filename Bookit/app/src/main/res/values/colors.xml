@@ -3,10 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="tab_checked">#dbb867</color>
+    <color name="tab_checked">#5a5858</color>
     <color name="tab_unchecked">#757575</color>
     <color name="light_black">#272521</color>
     <color name="sky_blue">#87ceeb</color>
     <color name="dark_gold">#373227</color>
     <color name="head_bg">#efd088</color>
+    <color name="orange">#f6bf00</color>
 </resources>

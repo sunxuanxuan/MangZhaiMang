@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    sothree:umanoShadowHeight="0dp"
+    sothree:umanoPanelHeight="0dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/time_slidingup">
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ebebeb">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -14,7 +23,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="160dp"
                 android:background="@color/light_black"
                 android:id="@+id/mine_personal"
                 android:paddingRight="20dp"
@@ -50,17 +59,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/tab_checked"
+                        android:textColor="#fff"
                         android:textSize="17sp"
                         android:text="Crazy丶轩Sir"
-                        android:id="@+id/mine_cur_name"/>
+                        android:id="@+id/mine_cur_name"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:textColor="#aa7748"
-                        android:text="LV 2"/>
+                        android:textColor="@color/orange"
+                        android:text="LV 2"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -86,170 +97,161 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="#fff"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/mine_message_record"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"/>
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="60dp"
-                    android:background="#dcdcdc"
-                    android:layout_gravity="center_vertical"/>
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/mine_seat"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"/>
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="60dp"
-                    android:background="#dcdcdc"
-                    android:layout_gravity="center_vertical"/>
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/mine_rank"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"/>
-            </LinearLayout>
-            
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:background="#fff"
-                android:layout_marginTop="10dp"
-                android:id="@+id/mine_line_chart"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    android:id="@+id/time_exhibit">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/mine_line_chart"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:src="@drawable/time"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
+                                android:textColor="#000"
+                                android:text="每日学习时间"
+                                android:textSize="15sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:textColor="#000"
+                                android:text="(近7天)"
+                                android:textSize="12sp"/>
+                            </LinearLayout>
+
+                            <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/line_chart"/>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_height="90dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    android:id="@+id/mine_message_record">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/mine_message_record"
+                        android:layout_gravity="center"/>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_height="90dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/mine_myseats">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/mine_seat"
+                        android:layout_gravity="center"/>
+                </android.support.v7.widget.CardView>
+
+
+            </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="100dp"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/time"/>
+                    <android.support.v7.widget.CardView
+                        android:layout_height="90dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="3dp"
+                        android:id="@+id/mine_violation_record">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/mine_record"
+                            android:layout_gravity="center"/>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_height="90dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="3dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:textColor="#000"
-                        android:text="每日学习时间"
-                        android:textSize="17sp"/>
+                        android:id="@+id/mine_setting_cv">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:textColor="#000"
-                        android:text="(近7天)"
-                        android:textSize="12sp"/>
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/mine_setting"
+                            android:layout_gravity="center" />
+                    </android.support.v7.widget.CardView>
+
+
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/line_chart"/>
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#fff"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/mine_ir_record_container">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/setting"
-                    android:id="@+id/mine_ir_record"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/mine_ir_record"
-                    android:textSize="18sp"
-                    android:paddingTop="8dp"
-                    android:text="违规记录"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"/>
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:paddingBottom="12.5dp"
-                    android:paddingTop="12.5dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/next_p"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#fff"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/mine_setting_container">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/setting"
-                    android:id="@+id/mine_setting"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:paddingTop="8dp"
-                    android:layout_toRightOf="@id/mine_setting"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
-                    android:text="设置"/>
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:paddingTop="12.5dp"
-                    android:paddingBottom="12.5dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/next_p"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"/>
-
-            </RelativeLayout>
 
         </LinearLayout>
 
 </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:orientation="vertical"
+        android:background="#fff">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/detal_rank"/>
+
+    </LinearLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
